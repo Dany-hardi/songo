@@ -1,0 +1,677 @@
+/* ============================================================
+   SONGO INF222 — Feuille de style principale
+   Palette : blanc #FFFFFF, bleu marine #1B3A6B, bleu moyen #2C5F9E,
+             gris clair #F0F4F8, texte sombre #1A1A1A
+   Police  : Georgia (titres), Arial/system-ui (corps)
+   ============================================================ */
+
+/* Reset minimal */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --navy:       #1B3A6B;
+    --navy-dark:  #112850;
+    --blue-mid:   #2C5F9E;
+    --blue-light: #4A7FC1;
+    --white:      #FFFFFF;
+    --gray-bg:    #F0F4F8;
+    --gray-line:  #CDD5E0;
+    --gray-text:  #4A5568;
+    --text:       #1A1A1A;
+
+    --board-wood:     #5C3D1E;
+    --board-wood-alt: #6B4723;
+    --seed-color:     #2C1A06;
+    --seed-stroke:    #8B5E2A;
+
+    --cell-size: 90px;
+}
+
+html {
+    font-size: 15px;
+    font-family: Arial, Helvetica, system-ui, sans-serif;
+    color: var(--text);
+    background: var(--gray-bg);
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* ============================================================
+   EN-TÊTE INSTITUTIONNEL
+   ============================================================ */
+
+.site-header {
+    background: var(--navy);
+    color: var(--white);
+    border-bottom: 4px solid var(--blue-mid);
+}
+
+.header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.header-title-block {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.header-logo {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 1.5rem;
+    font-weight: bold;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.header-subtitle {
+    font-size: 0.78rem;
+    color: #A8C4E8;
+    letter-spacing: 0.02em;
+}
+
+.header-version-badge {
+    font-size: 0.72rem;
+    background: var(--blue-mid);
+    color: var(--white);
+    padding: 4px 10px;
+    border: 1px solid var(--blue-light);
+    white-space: nowrap;
+}
+
+
+/* ============================================================
+   NAVIGATION SECONDAIRE
+   ============================================================ */
+
+.site-nav {
+    background: var(--navy-dark);
+    border-bottom: 1px solid var(--blue-mid);
+}
+
+.nav-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    height: 36px;
+}
+
+.nav-item {
+    color: #A8C4E8;
+    font-size: 0.8rem;
+    padding: 0 14px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    transition: background 0.15s, color 0.15s;
+}
+
+.nav-item:hover,
+.nav-item.nav-active {
+    background: var(--blue-mid);
+    color: var(--white);
+}
+
+.nav-sep {
+    color: #4A6A9A;
+    font-size: 0.8rem;
+}
+
+
+/* ============================================================
+   PANNEAU DES RÈGLES
+   ============================================================ */
+
+.rules-panel {
+    background: var(--white);
+    border-bottom: 2px solid var(--navy);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.12);
+}
+
+.rules-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 24px 28px;
+    position: relative;
+}
+
+.rules-inner h2 {
+    font-family: Georgia, serif;
+    font-size: 1.15rem;
+    color: var(--navy);
+    margin-bottom: 16px;
+    border-bottom: 2px solid var(--navy);
+    padding-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.rules-inner h3 {
+    font-size: 0.9rem;
+    color: var(--navy);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin: 14px 0 6px;
+}
+
+.rules-inner p {
+    font-size: 0.88rem;
+    line-height: 1.6;
+    color: var(--text);
+    margin-bottom: 6px;
+}
+
+.rules-inner ul {
+    margin: 6px 0 6px 20px;
+}
+
+.rules-inner ul li {
+    font-size: 0.88rem;
+    line-height: 1.6;
+    margin-bottom: 4px;
+}
+
+.btn-close-rules {
+    position: absolute;
+    top: 20px;
+    right: 24px;
+    background: none;
+    border: 1px solid var(--gray-line);
+    color: var(--gray-text);
+    padding: 4px 10px;
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
+.btn-close-rules:hover {
+    background: var(--gray-bg);
+    border-color: var(--navy);
+    color: var(--navy);
+}
+
+
+/* ============================================================
+   CONTENU PRINCIPAL — LAYOUT 3 COLONNES
+   ============================================================ */
+
+.main-content {
+    flex: 1;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 16px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 200px 1fr 200px;
+    gap: 16px;
+    align-items: start;
+}
+
+.panel {
+    background: var(--white);
+    border: 1px solid var(--gray-line);
+    border-top: 3px solid var(--navy);
+}
+
+.panel-header {
+    background: var(--navy);
+    color: var(--white);
+    font-size: 0.75rem;
+    font-weight: bold;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    padding: 7px 14px;
+}
+
+
+/* ============================================================
+   PANNEAU SCORES
+   ============================================================ */
+
+.panel-scores {
+    padding-bottom: 16px;
+}
+
+.scoreboard {
+    padding: 16px 14px 0;
+}
+
+.score-row {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    padding: 10px 0;
+}
+
+.score-player-name {
+    font-family: Georgia, serif;
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: var(--navy);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    min-width: 48px;
+}
+
+.score-value {
+    font-family: Georgia, serif;
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--navy);
+    line-height: 1;
+}
+
+.score-label {
+    font-size: 0.7rem;
+    color: var(--gray-text);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.score-divider {
+    border-top: 1px solid var(--gray-line);
+    margin: 4px 0;
+}
+
+.turn-block {
+    padding: 14px 14px 0;
+    border-top: 1px solid var(--gray-line);
+    margin-top: 12px;
+}
+
+.turn-label {
+    font-size: 0.68rem;
+    color: var(--gray-text);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 5px;
+}
+
+.turn-indicator {
+    font-family: Georgia, serif;
+    font-size: 0.95rem;
+    font-weight: bold;
+    color: var(--navy);
+    padding: 6px 10px;
+    border: 2px solid var(--navy);
+    text-align: center;
+    background: var(--gray-bg);
+}
+
+.turn-indicator.turn-sud {
+    border-color: var(--blue-mid);
+    color: var(--blue-mid);
+    background: #EBF1FA;
+}
+
+.turn-indicator.turn-nord {
+    border-color: var(--navy-dark);
+    color: var(--navy-dark);
+    background: #E4EBF5;
+}
+
+.controls-block {
+    padding: 14px 14px 0;
+}
+
+.btn-primary {
+    width: 100%;
+    background: var(--navy);
+    color: var(--white);
+    border: none;
+    padding: 9px 0;
+    font-size: 0.82rem;
+    font-weight: bold;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.btn-primary:hover {
+    background: var(--blue-mid);
+}
+
+.info-block {
+    padding: 14px 14px 0;
+    border-top: 1px solid var(--gray-line);
+    margin-top: 14px;
+}
+
+.info-block p {
+    font-size: 0.75rem;
+    color: var(--gray-text);
+    line-height: 1.7;
+}
+
+
+/* ============================================================
+   PLATEAU DE JEU
+   ============================================================ */
+
+.panel-board {
+    padding-bottom: 16px;
+}
+
+.game-message {
+    margin: 12px 14px;
+    padding: 8px 12px;
+    font-size: 0.83rem;
+    border-left: 4px solid var(--navy);
+    background: var(--gray-bg);
+    color: var(--text);
+    min-height: 36px;
+    line-height: 1.5;
+}
+
+.game-message.msg-error {
+    border-left-color: #C0392B;
+    background: #FDECEA;
+    color: #7B1F1A;
+}
+
+.game-message.msg-gameover {
+    border-left-color: var(--navy-dark);
+    background: #E4EBF5;
+    color: var(--navy-dark);
+    font-weight: bold;
+}
+
+.board-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 0 14px;
+}
+
+.board-compass {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 240px;
+    font-size: 0.68rem;
+    color: var(--gray-text);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: bold;
+}
+
+.songo-board {
+    flex: 1;
+    overflow-x: auto;
+}
+
+/* Lignes du plateau */
+.board-row {
+    display: flex;
+    align-items: stretch;
+    gap: 3px;
+    margin-bottom: 3px;
+}
+
+.board-row:last-child {
+    margin-bottom: 0;
+}
+
+/* Étiquette joueur (hors cases) */
+.player-label {
+    width: 40px;
+    min-width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.65rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+}
+
+.label-nord {
+    color: var(--navy-dark);
+    background: #D8E5F5;
+    border: 1px solid var(--navy);
+}
+
+.label-sud {
+    color: var(--blue-mid);
+    background: #EBF1FA;
+    border: 1px solid var(--blue-mid);
+}
+
+/* Séparateur avec numéros au centre */
+.board-separator {
+    display: flex;
+    gap: 3px;
+    padding-left: 43px;
+    margin: 2px 0;
+}
+
+.case-number-mid {
+    width: var(--cell-size);
+    min-width: var(--cell-size);
+    text-align: center;
+    font-size: 0.65rem;
+    color: var(--gray-text);
+    font-family: Georgia, serif;
+    letter-spacing: 0.04em;
+}
+
+/* Cases du plateau */
+.board-cell {
+    width: var(--cell-size);
+    min-width: var(--cell-size);
+    height: 110px;
+    background: var(--board-wood);
+    border: 2px solid #3B2008;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 4px 4px;
+    cursor: default;
+    position: relative;
+    transition: box-shadow 0.1s;
+}
+
+.cell-nord {
+    background: var(--board-wood-alt);
+    border-color: #2E1A04;
+}
+
+.cell-empty {
+    background: #3C2510;
+    border-color: #2A1A08;
+    opacity: 0.65;
+}
+
+.cell-playable {
+    cursor: pointer;
+    box-shadow: 0 0 0 3px var(--blue-light);
+    border-color: var(--blue-light);
+}
+
+.cell-playable:hover {
+    box-shadow: 0 0 0 3px #6AA3D8;
+    background: #6B4820;
+}
+
+.cell-selected {
+    box-shadow: 0 0 0 3px #F0C040;
+    border-color: #F0C040;
+}
+
+/* Numéro de case dans la cellule */
+.cell-number {
+    font-size: 0.6rem;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.04em;
+    align-self: flex-end;
+    line-height: 1;
+}
+
+/* Container SVG des graines */
+.seeds-container {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.seeds-svg {
+    width: 100%;
+    height: 100%;
+    max-width: 68px;
+    max-height: 56px;
+}
+
+.seed-circle {
+    fill: var(--seed-color);
+    stroke: var(--seed-stroke);
+    stroke-width: 1;
+}
+
+.seed-overflow {
+    font-size: 10px;
+    fill: rgba(255,255,255,0.5);
+    font-family: Arial, sans-serif;
+}
+
+/* Compteur numérique */
+.seed-count {
+    font-size: 0.7rem;
+    font-weight: bold;
+    color: rgba(255,255,255,0.75);
+    background: rgba(0,0,0,0.35);
+    min-width: 20px;
+    text-align: center;
+    padding: 1px 4px;
+    line-height: 1.4;
+}
+
+/* Légende sous le plateau */
+.board-legend {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    padding: 10px 14px 0;
+    border-top: 1px solid var(--gray-line);
+    margin-top: 12px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.72rem;
+    color: var(--gray-text);
+}
+
+.legend-dot {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border: 2px solid var(--gray-line);
+}
+
+.dot-playable {
+    border-color: var(--blue-light);
+    box-shadow: 0 0 0 1px var(--blue-light);
+}
+
+.dot-empty {
+    background: #3C2510;
+    border-color: #2A1A08;
+    opacity: 0.65;
+}
+
+.legend-seed-svg {
+    width: 14px;
+    height: 14px;
+}
+
+
+/* ============================================================
+   JOURNAL DE PARTIE
+   ============================================================ */
+
+.panel-log {
+    max-height: 540px;
+    display: flex;
+    flex-direction: column;
+}
+
+.game-log {
+    padding: 10px 12px;
+    overflow-y: auto;
+    flex: 1;
+    max-height: 500px;
+}
+
+.log-entry {
+    font-size: 0.78rem;
+    color: var(--text);
+    padding: 5px 0;
+    border-bottom: 1px solid var(--gray-bg);
+    line-height: 1.45;
+}
+
+.log-entry:last-child {
+    border-bottom: none;
+}
+
+.log-init {
+    color: var(--gray-text);
+    font-style: italic;
+}
+
+
+/* ============================================================
+   PIED DE PAGE
+   ============================================================ */
+
+.site-footer {
+    background: var(--navy-dark);
+    color: #7A9ABE;
+    border-top: 3px solid var(--navy);
+    margin-top: auto;
+}
+
+.footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 11px 24px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.72rem;
+    letter-spacing: 0.03em;
+}
+
+.footer-sep {
+    color: #4A6A9A;
+}

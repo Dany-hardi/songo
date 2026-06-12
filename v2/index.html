@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TP INF222 — Songo</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="header">
+        <div class="header-inner">
+            <div class="header-left">
+                <div class="header-logo">TP INF222 — SONGO</div>
+                <div class="header-mode">MODE RÉSEAU — DEUX JOUEURS DISTANTS</div>
+            </div>
+            <div class="header-right">
+                <div class="net-status net-online" id="net-status">EN LIGNE</div>
+                <button class="btn-stop" id="btn-stop">&#9632; ARRÊTER</button>
+            </div>
+        </div>
+    </header>
+
+    <nav class="nav">
+        <div class="nav-inner">
+            <span class="nav-link nav-active">Partie</span>
+            <span class="nav-sep">|</span>
+            <span class="nav-link" id="nav-rules">Règles</span>
+        </div>
+    </nav>
+
+    <aside id="rules-panel" hidden>
+        <div class="rules-box">
+            <button class="btn-close-rules" id="btn-close-rules">Fermer ×</button>
+            <h2>Règles du Songo</h2>
+            <h3>Mise en place</h3>
+            <p>2 joueurs, 7 cases par camp, 5 graines par case (70 au total). SUD commence.</p>
+            <h3>Distribution</h3>
+            <p>Ramassez les graines d'une case, déposez-les une par une : <strong>droite → gauche dans votre camp</strong>, puis <strong>gauche → droite chez l'adversaire</strong>. Plus de 13 graines : tour complet en sautant la case d'origine.</p>
+            <h3>Récolte</h3>
+            <p>La dernière graine tombe chez l'adversaire (hors case 1) et porte la case à 2–4 graines → vous prenez tout. Prise à la chaîne sur les cases précédentes remplissant la même condition.</p>
+            <h3>Solidarité</h3>
+            <p>Camp adverse vide → distribuez-lui au moins 7 graines (sinon le maximum possible). Si impossible → fin de partie.</p>
+            <h3>Interdits</h3>
+            <p>Case 7 ne peut semer 1 ou 2 graines chez l'adversaire. Interdit de vider complètement le camp adverse.</p>
+            <h3>Fin</h3>
+            <p>40 graines → victoire. Moins de 10 sur le plateau → graines restantes reviennent à leur propriétaire. Nul si aucun joueur n'atteint 40.</p>
+        </div>
+    </aside>
+
+    <!-- LOBBY -->
+    <div id="lobby" class="lobby">
+        <div class="lobby-card">
+            <div class="lobby-header">ACCÈS À LA PARTIE</div>
+            <div class="lobby-body">
+                <p class="lobby-desc">
+                    Chaque joueur ouvre cette page sur sa machine et choisit son camp.
+                    Le premier choisit SUD ou NORD, l'adversaire choisit l'autre.
+                </p>
+                <div class="lobby-error" id="lobby-error" style="display:none"></div>
+                <div class="lobby-btns">
+                    <button class="btn-camp btn-camp-sud" id="btn-sud">
+                        <span class="camp-name">▼ SUD</span>
+                        <span class="camp-info">Rangée du bas · Joue en premier</span>
+                    </button>
+                    <button class="btn-camp btn-camp-nord" id="btn-nord">
+                        <span class="camp-name">▲ NORD</span>
+                        <span class="camp-info">Rangée du haut</span>
+                    </button>
+                </div>
+                <p class="lobby-note">
+                    L'adversaire doit accéder à cette même URL sur son navigateur.<br>
+                    Exemple : <code>http://[votre-ip]/songo/v2/</code>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ZONE DE JEU -->
+    <div id="game-area" style="display:none">
+
+        <div class="turn-bar turn-waiting" id="turn-bar">
+            <span id="turn-text">EN ATTENTE...</span>
+        </div>
+
+        <div class="game-inner">
+
+            <!-- Panneau gauche -->
+            <aside class="side-panel">
+
+                <div class="side-header">SCORES</div>
+                <div class="score-block">
+                    <div class="score-name">NORD</div>
+                    <div class="score-val" id="score-nord">0</div>
+                    <div class="score-sub">/ 40</div>
+                </div>
+                <div class="score-progress">
+                    <div class="score-bar-nord" id="score-bar-nord" style="width:50%"></div>
+                    <div class="score-bar-sud"  id="score-bar-sud"  style="width:50%"></div>
+                </div>
+                <div class="score-block score-block-sud">
+                    <div class="score-name">SUD</div>
+                    <div class="score-val" id="score-sud">0</div>
+                    <div class="score-sub">/ 40</div>
+                </div>
+
+                <div class="player-badge" id="player-badge">—</div>
+
+                <div class="side-header" style="margin-top:14px">INFOS</div>
+                <div class="info-list">
+                    <div class="info-row"><span>Victoire</span><span>40 gr.</span></div>
+                    <div class="info-row"><span>Total</span><span>70 gr.</span></div>
+                    <div class="info-row"><span>Cases</span><span>7 / camp</span></div>
+                    <div class="info-row"><span>Sync</span><span>1.5 s</span></div>
+                </div>
+
+                <div class="side-header" style="margin-top:14px">JOURNAL</div>
+                <table class="log-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Joueur</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="log-body">
+                        <tr class="log-init-row">
+                            <td>—</td>
+                            <td>—</td>
+                            <td>Partie initialisée</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <button class="btn-new-game" id="btn-new-game">Nouvelle partie</button>
+
+            </aside>
+
+            <!-- Zone centrale -->
+            <main class="board-area">
+
+                <div class="game-status status-info" id="game-status">
+                    En attente du second joueur...
+                </div>
+
+                <div class="board-compass">
+                    <span>▲ NORD</span>
+                    <span>▼ SUD</span>
+                </div>
+
+                <div class="board-scroll">
+                    <div id="board" class="board"></div>
+                </div>
+
+                <div class="legend">
+                    <span class="leg-item"><span class="leg-dot dot-play"></span> Case jouable</span>
+                    <span class="leg-item"><span class="leg-dot dot-empty"></span> Case vide</span>
+                    <span class="leg-item">
+                        <svg width="12" height="12" viewBox="0 0 12 12">
+                            <circle cx="6" cy="6" r="4" class="seed"/>
+                        </svg> Graine
+                    </span>
+                </div>
+
+            </main>
+
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-inner">
+            <span>INF222 — Programmation Web</span>
+            <span class="foot-sep">|</span>
+            <span>Dr. Messi — Le GOAT de INFO-L2</span>
+        </div>
+    </footer>
+
+    <script src="songo-logic.js"></script>
+    <script src="app.js"></script>
+
+</body>
+</html>
